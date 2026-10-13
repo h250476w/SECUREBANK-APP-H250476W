@@ -15,22 +15,22 @@ A robust, enterprise-grade console-based Java application engineered to demonstr
  Detailed Feature Elaborations
 
  1. Cryptographic Authentication & Account Protection
-- Salted Password Hashing:** User credentials are secure against rainbow table and dictionary attacks by employing strong cryptographic hashing (`PBKDF2WithHmacSHA256`) combined with unique, cryptographically random 16-byte salts per user. Plain-text passwords are never stored or logged.
-- Memory Zeroization:** Sensitive password inputs read as character arrays (`char[]`) are immediately wiped from memory (`Arrays.fill(..., ' ')`) post-authentication to mitigate memory inspection vulnerabilities.
-- Timing Attack Mitigation:** Password hash evaluations use constant-time byte array comparisons (`constantTimeEquals`) to prevent attacker timing side-channel analysis.
-- Brute-Force Defense:** Features account lockout tracking (`FailedAttempts`) that automatically restricts further login attempts after successive failed credentials.
+- Salted Password Hashing User credentials are secure against rainbow table and dictionary attacks by employing strong cryptographic hashing (`PBKDF2WithHmacSHA256`) combined with unique, cryptographically random 16-byte salts per user. Plain-text passwords are never stored or logged.
+- Memory Zeroization: Sensitive password inputs read as character arrays (`char[]`) are immediately wiped from memory (`Arrays.fill(..., ' ')`) post-authentication to mitigate memory inspection vulnerabilities.
+- Timing Attack Mitigation Password hash evaluations use constant-time byte array comparisons (`constantTimeEquals`) to prevent attacker timing side-channel analysis.
+- Brute-Force Defense  Features account lockout tracking (`FailedAttempts`) that automatically restricts further login attempts after successive failed credentials.
 
  2. Account Management & Principle of Least Privilege
-- Isolated User Profiles:** Enforces strict access control (Principle of Least Privilege) where authenticated users are restricted exclusively to viewing, depositing into, or withdrawing from accounts tied directly to their own ownership ID (`acc.getOwnerUsername().equals(currentUser.getUsername())`).
-- Multi-Account Capabilities:** Supports distinct account types (e.g., `SavingsAccount`, `CurrentAccount`) utilizing object inheritance and polymorphism.
+- Isolated User Profiles: Enforces strict access control (Principle of Least Privilege) where authenticated users are restricted exclusively to viewing, depositing into, or withdrawing from accounts tied directly to their own ownership ID (`acc.getOwnerUsername().equals(currentUser.getUsername())`).
+- Multi-Account Capabilities Supports distinct account types (e.g., `SavingsAccount`, `CurrentAccount`) utilizing object inheritance and polymorphism.
 
  3. Financial Transaction Processing & Precision
-- Exact Currency Mathematics:** Eliminates IEEE floating-point rounding errors (inherent to primitive `double` or `float` types) by using high-precision `BigDecimal` arithmetic for all balance recalculations.
-- Atomic Operations:** Guarantees boundary checks on withdrawals to prevent overdrawing or negative balances, immediately returning real-time remaining account balance feedback.
+- Exact Currency Mathematics Eliminates IEEE floating-point rounding errors (inherent to primitive `double` or `float` types) by using high-precision `BigDecimal` arithmetic for all balance recalculations.
+- Atomic Operations Guarantees boundary checks on withdrawals to prevent overdrawing or negative balances, immediately returning real-time remaining account balance feedback.
 
  4. Robust Persistence & File Storage Security
-- Injection Attack Prevention:** Input fields (usernames, amounts, account numbers) are strictly validated via whitelisting regex and sanitized to strip delimiter characters (`|`, `\r`, `\n`), completely defending against plain-text storage file injection attacks.
-- Atomic File Writes:** Prevents storage file corruption or truncation during unexpected application crashes by writing data updates to temporary swap files (`accounts.tmp`) and performing atomic file replacements (`Files.move` with `ATOMIC_MOVE`).
+- Injection Attack Prevention Input fields (usernames, amounts, account numbers) are strictly validated via whitelisting regex and sanitized to strip delimiter characters (`|`, `\r`, `\n`), completely defending against plain-text storage file injection attacks.
+- Atomic File Writes Prevents storage file corruption or truncation during unexpected application crashes by writing data updates to temporary swap files (`accounts.tmp`) and performing atomic file replacements (`Files.move` with `ATOMIC_MOVE`).
 
  5. Safe Error Handling & Defensive Audit Logging
 - Suppressed Stack Traces:** Catches low-level exceptions globally and displays clean, sanitized messages to standard output to avoid leaking internal system details or stack traces to end users.
@@ -40,7 +40,7 @@ A robust, enterprise-grade console-based Java application engineered to demonstr
 
  How to Run
 
-1. Launch Environment:** Open **IntelliJ IDEA**.
-2. Import Project:** Select **File > Open** and choose the `SecureBankApp-H250476W` project root directory.
-3. Configure Runtime:** Ensure **JDK 17 or higher** is configured in IntelliJ IDEA under **File > Project Structure > Project > SDK**.
-4. Execute Application:** Navigate to `src/securebank/Main.java` (or `src/bank/Main.java`), right-click the file, and select **Run 'Main.main()'**.
+1. Launch Environment Open IntelliJ IDEA.
+2. Import Project: Select File > Open and choose the `SecureBankApp-H250476W` project root directory.
+3. Configure Runtime Ensure JDK 17 or higher is configured in IntelliJ IDEA under File > Project Structure > Project > SDK.
+4. Execute Application: Navigate to `src/securebank/Main.java` (or `src/bank/Main.java`), right-click the file, and select Run 'Main.main()'.
